@@ -4,7 +4,7 @@ Description: Template for 444noresponse.com Platform
 Parameters:
   AvailabilityZone:
     Type: String
-    Default: eu-central-1a
+    Default: us-east-1a
 
 Resources:
   VPC:
@@ -16,7 +16,7 @@ Resources:
       InstanceTenancy: default
       Tags:
         - Key: Name
-          Value: 444noresponse.com
+          Value: jenkins
 
   SubnetAPublic:
     Type: AWS::EC2::Subnet
@@ -27,7 +27,7 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: 444noresponse.com
+          Value: jenkins
           
   InternetGateway:
     Type: AWS::EC2::InternetGateway
@@ -35,7 +35,7 @@ Resources:
     Properties:
       Tags:
         - Key: Name
-          Value:  444noresponse.com
+          Value:  jenkins
 
   AttachGateway:
     Type: AWS::EC2::VPCGatewayAttachment
@@ -49,7 +49,7 @@ Resources:
       VpcId: !Ref VPC
       Tags:
         - Key: Name
-          Value: 444noresponse.com
+          Value: jenkins
 
   PublicRoute1:             
     Type: AWS::EC2::Route
@@ -72,7 +72,7 @@ Resources:
       VpcId: !Ref VPC
       Tags: 
         - Key: Name
-          Value: 444noresponse.com
+          Value: jenkins.com
       SecurityGroupIngress: 
         - IpProtocol: tcp
           FromPort: 22
@@ -86,11 +86,11 @@ Resources:
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
-        # 8080 port for phpmyadmin,securyty reason 
-        # - IpProtocol: tcp
-        #   FromPort: 8080
-        #   ToPort: 8080
-        #   CidrIp: 0.0.0.0/0  
+         # 8080 port for jenkins 
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          CidrIp: 0.0.0.0/0  
         # Allow to ping server
         # - IpProtocol: icmp
         #   FromPort: -1
@@ -103,9 +103,10 @@ Resources:
       AvailabilityZone: !Ref AvailabilityZone
       SubnetId: !Ref SubnetAPublic
       # ImageId: ami-0d527b8c289b4af7f  #Ubuntu 20.04 eu-central-1
-      ImageId: ami-0caef02b518350c8b  #Ubuntu 22.04 eu-central-1
-      InstanceType: t2.micro
-      KeyName: awsdjole
+      # ImageId: ami-0caef02b518350c8b  #Ubuntu 22.04 eu-central-1
+      ImageId: ami-02e0bb36c61bb9715  #RHEL_HA-8.4.0_HVM-20210504-x86_64-2-Hourly2-GP2
+      InstanceType: t3.medium
+      KeyName: jenkins
       BlockDeviceMappings:
         - DeviceName: '/dev/sda1'
           Ebs:
@@ -132,6 +133,8 @@ Resources:
             # prev-version docker-compose 1.21.0
             curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
             chmod +x /usr/local/bin/docker-compose
+            dnf install java-17-openjdk-devel
+            echo java --version
       Tags:
         - Key: Name
-          Value: 444noresponse.com    
+          Value: jenkins
