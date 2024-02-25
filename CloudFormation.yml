@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Template for 444noresponse.com Platform 
+Description: testing jenkins in RHEL8.4
 
 Parameters:
   AvailabilityZone:
@@ -104,7 +104,7 @@ Resources:
       SubnetId: !Ref SubnetAPublic
       # ImageId: ami-0d527b8c289b4af7f  #Ubuntu 20.04 eu-central-1
       # ImageId: ami-0caef02b518350c8b  #Ubuntu 22.04 eu-central-1
-      ImageId: ami-02e0bb36c61bb9715  #RHEL_HA-8.4.0_HVM-20210504-x86_64-2-Hourly2-GP2
+      ImageId: ami-02e0bb36c61bb9715  #RHEL_HA-8.4.0_HVM-20210504-x86_64-2-Hourly2-GP2 us-east-1
       InstanceType: t3.medium
       KeyName: jenkins
       BlockDeviceMappings:
@@ -119,7 +119,7 @@ Resources:
           !Sub |
             #!/bin/bash  
             sudo yum -y install java-17-openjdk-devel
-            sudo yum install wget -y
+            sudo yum -y install wget
             sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
             sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
             sudo yum -y install jenkins
