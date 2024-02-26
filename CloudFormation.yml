@@ -118,14 +118,14 @@ Resources:
         Fn::Base64: 
           !Sub |
             #!/bin/bash  
-            sudo yum -y install java-17-openjdk-devel
-            sudo yum -y install wget
+            sudo dnf -y install java-17-openjdk-devel
+            sudo dnf -y install wget
             sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
             sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-            sudo yum -y install jenkins
+            sudo dnf -y install jenkins
+            
             sudo systemctl start jenkins
             sudo systemctl enable jenkins
-            
       Tags:
         - Key: Name
           Value: jenkins
