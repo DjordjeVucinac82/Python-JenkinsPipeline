@@ -106,7 +106,7 @@ Resources:
       # ImageId: ami-0caef02b518350c8b  #Ubuntu 22.04 eu-central-1
       ImageId: ami-02e0bb36c61bb9715  #RHEL_HA-8.4.0_HVM-20210504-x86_64-2-Hourly2-GP2 us-east-1
       InstanceType: t3.medium
-      KeyName: jenkins
+      KeyName: jenkinsDell
       BlockDeviceMappings:
         - DeviceName: '/dev/sda1'
           Ebs:
@@ -118,14 +118,14 @@ Resources:
         Fn::Base64: 
           !Sub |
             #!/bin/bash  
-            sudo yum -y install java-17-openjdk-devel
-            sudo yum -y install wget
+            sudo dnf -y install java-17-openjdk-devel
+            sudo dnf -y install wget
             sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
             sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-            sudo yum -y install jenkins
+            sudo dnf -y install jenkins
+            
             sudo systemctl start jenkins
             sudo systemctl enable jenkins
-            
       Tags:
         - Key: Name
           Value: jenkins
