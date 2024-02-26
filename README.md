@@ -8,5 +8,5 @@ aws cloudformation delete-stack --stack-name jenkins --profile djole
 
 ssh -i /home/djole/repos/private/Python-JenkinsPipeline/*****.pem ec2-user@54.196.198.114
 
-coverage run -m unittest discover -p "test_*.py"
-python -m unittest test_example.py
+coverage run -m unittest discover -p "test_*.py" \
+python3 -m unittest test_example.py
