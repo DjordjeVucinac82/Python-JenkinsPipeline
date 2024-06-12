@@ -118,6 +118,7 @@ Resources:
         Fn::Base64: 
           !Sub |
             #!/bin/bash  
+            sudo yum update -y
             sudo dnf -y install java-17-openjdk-devel
             sudo dnf -y install wget
             sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
